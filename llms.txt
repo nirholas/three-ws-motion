@@ -1,0 +1,19 @@
+# @three-ws/motion
+
+> Text and structure to full-body 3D animation. A Motion Score in, a three.js AnimationClip out: forward and inverse kinematics, balance, ground contact and secondary motion in plain JavaScript, with no mocap data, no model weights and no renderer.
+
+@three-ws/motion is a JavaScript library from three.ws. Install: `npx -y @three-ws/motion`.
+
+## Docs
+
+- [README](https://github.com/nirholas/three-ws-motion/blob/main/README.md): install, configuration, full reference
+- [Documentation site](https://nirholas.github.io/three-ws-motion/): the README as a web page
+- [Full text for LLMs](https://nirholas.github.io/three-ws-motion/llms-full.txt): README inlined
+- [AGENTS.md](https://github.com/nirholas/three-ws-motion/blob/main/AGENTS.md): guidance for coding agents
+
+## Project
+
+- [Source](https://github.com/nirholas/three-ws-motion)
+- [npm](https://www.npmjs.com/package/@three-ws/motion)
+- [three.ws](https://three.ws): the platform this is part of
+- [Issues](https://github.com/nirholas/three-ws-motion/issues)

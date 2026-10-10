@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>@three-ws/motion: Text and structure to full-body 3D animation</title>
+<meta name="description" content="Text and structure to full-body 3D animation. A Motion Score in, a three.js AnimationClip out: forward and inverse kinematics, balance, ground contact and secondary motion in plain JavaScript, with no mocap data, no model weights and no renderer.">
+<link rel="canonical" href="https://nirholas.github.io/three-ws-motion/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="three.ws">
+<meta property="og:title" content="@three-ws/motion">
+<meta property="og:description" content="Text and structure to full-body 3D animation. A Motion Score in, a three.js AnimationClip out: forward and inverse kinematics, balance, ground contact and secondary motion in plain JavaScript, with no mocap data, no model weights and no renderer.">
+<meta property="og:url" content="https://nirholas.github.io/three-ws-motion/">
+<meta property="og:image" content="https://nirholas.github.io/three-ws-motion/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="@three-ws/motion">
+<meta name="twitter:description" content="Text and structure to full-body 3D animation. A Motion Score in, a three.js AnimationClip out: forward and inverse kinematics, balance, ground contact and secondary motion in plain JavaScript, with no mocap data, no model weights and no renderer.">
+<meta name="twitter:image" content="https://nirholas.github.io/three-ws-motion/og.png">
+<meta name="keywords" content="3d, animation, motion, procedural-animation, inverse-kinematics, ik, skeleton, rig, humanoid, avatar, text-to-motion, animationclip, threejs, gltf, glb, three.ws, ai-agents">
+<link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt">
+<link rel="icon" href="https://three.ws/three-ws-mcp-icon.svg" type="image/svg+xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"@three-ws/motion","description":"Text and structure to full-body 3D animation. A Motion Score in, a three.js AnimationClip out: forward and inverse kinematics, balance, ground contact and secondary motion in plain JavaScript, with no mocap data, no model weights and no renderer.","codeRepository":"https://github.com/nirholas/three-ws-motion","programmingLanguage":"JavaScript","license":"https://spdx.org/licenses/Apache-2.0.html","version":"0.1.0","url":"https://nirholas.github.io/three-ws-motion/","author":{"@type":"Organization","name":"three.ws","url":"https://three.ws"},"keywords":"3d, animation, motion, procedural-animation, inverse-kinematics, ik, skeleton, rig, humanoid, avatar, text-to-motion, animationclip, threejs, gltf, glb, three.ws, ai-agents"}</script>
+<style>:root{--bg:#fff;--fg:#111418;--mut:#586069;--line:#e3e6ea;--acc:#2563eb;--code:#f4f6f8;--card:#fafbfc}
+@media(prefers-color-scheme:dark){:root{--bg:#0b0d10;--fg:#e8eaed;--mut:#9aa3ad;--line:#232830;--acc:#6ea0ff;--code:#14181d;--card:#10141a}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--acc)}a:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+header.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:700;text-decoration:none;color:var(--fg)}
+.bar nav{margin-left:auto;display:flex;gap:16px;font-size:14px}
+.bar nav a{color:var(--mut);text-decoration:none;transition:color .15s}.bar nav a:hover{color:var(--fg)}
+.hero{max-width:1100px;margin:0 auto;padding:48px 16px 24px}
+.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 12px;letter-spacing:-.02em}
+.hero p{color:var(--mut);max-width:70ch;font-size:18px;margin:0 0 24px}
+.install{display:flex;align-items:center;gap:8px;max-width:620px;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:6px 6px 6px 14px}
+.install code{flex:1;overflow-x:auto;white-space:nowrap;font:14px ui-monospace,SFMono-Regular,Menlo,monospace}
+.install button{border:0;background:var(--acc);color:#fff;border-radius:7px;padding:8px 14px;font:600 13px system-ui;cursor:pointer;transition:transform .12s,opacity .12s}
+.install button:hover{opacity:.9}.install button:active{transform:scale(.96)}
+.cta{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.cta a{padding:9px 16px;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;color:var(--fg);transition:border-color .15s,transform .15s}
+.cta a:hover{border-color:var(--acc);transform:translateY(-1px)}.cta a.pri{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.layout{max-width:1100px;margin:0 auto;padding:8px 16px 64px;display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:40px}
+@media(max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}.toc{display:none}}
+.toc{position:sticky;top:76px;align-self:start;font-size:14px;border-left:1px solid var(--line);padding-left:16px}
+.toc p{margin:0 0 8px;font-weight:700;color:var(--mut);text-transform:uppercase;font-size:12px;letter-spacing:.06em}
+.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:6px 0}.toc a{color:var(--mut);text-decoration:none}.toc a:hover{color:var(--fg)}
+main{min-width:0;overflow-wrap:anywhere}main pre code{overflow-wrap:normal}main img{max-width:100%;height:auto}
+main h2{margin-top:2.2em;padding-bottom:.3em;border-bottom:1px solid var(--line)}
+.anchor{margin-left:-1.1em;padding-right:.4em;text-decoration:none;opacity:0;color:var(--mut)}h2:hover .anchor,h3:hover .anchor,h4:hover .anchor{opacity:1}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:14px;line-height:1.5}
+code{font:0.9em ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--code);padding:.15em .35em;border-radius:5px}pre code{background:none;padding:0}
+table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%}th,td{border:1px solid var(--line);padding:8px 12px;text-align:left}th{background:var(--card)}
+blockquote{margin:1em 0;padding:.2em 1em;border-left:4px solid var(--line);color:var(--mut)}
+footer{border-top:1px solid var(--line);color:var(--mut);font-size:14px}
+.foot-in{max-width:1100px;margin:0 auto;padding:24px 16px;display:flex;gap:16px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}</style>
+</head>
+<body>
+<header class="bar"><div class="bar-in">
+<a class="brand" href="https://nirholas.github.io/three-ws-motion/">@three-ws/motion</a>
+<nav aria-label="Project links"><a href="https://github.com/nirholas/three-ws-motion">GitHub</a><a href="https://www.npmjs.com/package/@three-ws/motion">npm</a><a href="llms.txt">llms.txt</a><a href="https://three.ws">three.ws</a></nav>
+</div></header>
+<section class="hero">
+<h1>@three-ws/motion</h1>
+<p>Text and structure to full-body 3D animation. A Motion Score in, a three.js AnimationClip out: forward and inverse kinematics, balance, ground contact and secondary motion in plain JavaScript, with no mocap data, no model weights and no renderer.</p>
+<div class="install" role="group" aria-label="Install command"><code>npx -y @three-ws/motion</code><button type="button" data-copy="npx -y @three-ws/motion">Copy</button></div>
+<div class="cta"><a class="pri" href="https://github.com/nirholas/three-ws-motion">View on GitHub</a><a href="https://github.com/nirholas/three-ws-motion/stargazers">Star the repo</a></div>
+</section>
+<div class="layout">
+<main id="content"><p align="center"><strong>Text and structure to full-body 3D animation. No motion capture, no model weights, no renderer.</strong></p><p align="center">
+  <a href="https://www.npmjs.com/package/@three-ws/motion"><img alt="npm" src="https://img.shields.io/npm/v/@three-ws/motion?logo=npm&color=cb3837"></a>
+  <a href="https://www.npmjs.com/package/@three-ws/motion"><img alt="downloads" src="https://img.shields.io/npm/dm/@three-ws/motion?color=cb3837"></a>
+  <img alt="license" src="https://img.shields.io/npm/l/@three-ws/motion?color=3b82f6">
+  <img alt="node" src="https://img.shields.io/node/v/@three-ws/motion?color=339933&logo=node.js">
+  <img alt="dependencies" src="https://img.shields.io/badge/dependencies-0-3b82f6">
+</p><p align="center">
+  <a href="#install">Install</a> ·
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#the-motion-score">Motion Score</a> ·
+  <a href="#api">API</a> ·
+  <a href="#cli">CLI</a> ·
+  <a href="#how-it-works">How it works</a> ·
+  <a href="https://three.ws/motion">three.ws/motion</a>
+</p><hr>
+<p>Every other way to get a new animation needs data you do not have: a motion
+capture stage, a licensed clip library, or a diffusion model trained on one.
+This package needs a sentence.</p>
+<pre><code class="language-js">import { motionFromText } from &#39;@three-ws/motion&#39;;
+
+const { clip } = motionFromText(&#39;wave hello twice, excitedly&#39;);
+// clip is a three.js AnimationClip.toJSON() document, ready to play
+</code></pre>
+<p>It works because a human body is a solved kinematics problem. Give a solver the
+places a body should be at a few moments in time, plus how it should get there,
+and it can produce the joint rotations for every frame between, with the feet on
+the floor, the weight over them, and the shoulders doing what shoulders do. The
+hard part was never the math, it was the authoring format, and that is what a
+<strong>Motion Score</strong> is: an animation written in anatomy and timing rather than in
+quaternions, which means a language model can write one and a person can read
+the diff.</p>
+<h2 id="why"><a class="anchor" href="#why" aria-label="Link to this section">#</a>Why</h2>
+<ul>
+<li><strong>Nothing to download.</strong> No <code>.fbx</code> library, no weights, no GPU. Zero
+dependencies, and it runs in a browser tab, a Node script, or a serverless
+handler from the same code path.</li>
+<li><strong>Deterministic.</strong> The same score compiles to the same clip, byte for byte,
+forever. Cacheable, diffable, and regression-testable.</li>
+<li><strong>It plays on anything humanoid.</strong> The output is standard clip JSON with
+canonical bone names, so it retargets onto Mixamo, Avaturn, VRM, Ready Player
+Me, Unreal and Daz rigs through any retargeter that speaks them.</li>
+<li><strong>It knows about bodies.</strong> Feet stay on the floor, the centre of mass stays
+over the support base, the clavicle helps a long reach, and the whole thing
+breathes. Those are the four things that separate a synthesized motion from a
+mannequin changing shape.</li>
+</ul>
+<h2 id="install"><a class="anchor" href="#install" aria-label="Link to this section">#</a>Install</h2>
+<pre><code class="language-bash">npm install @three-ws/motion
+</code></pre>
+<h2 id="quick-start"><a class="anchor" href="#quick-start" aria-label="Link to this section">#</a>Quick start</h2>
+<h3 id="from-a-prompt"><a class="anchor" href="#from-a-prompt" aria-label="Link to this section">#</a>From a prompt</h3>
+<pre><code class="language-js">import { motionFromText } from &#39;@three-ws/motion&#39;;
+import { AnimationClip, AnimationMixer } from &#39;three&#39;;
+
+const { clip, score, matched } = motionFromText(&#39;sit down heavily&#39;);
+
+const mixer = new AnimationMixer(avatar);
+mixer.clipAction(AnimationClip.parse(clip)).play();
+</code></pre>
+<p><code>motionFromText</code> uses the built-in lane, which recognizes about twenty actions
+with their modifiers (side, direction, manner, repetition) and needs no network
+and no API key. It throws <code>code: &#39;unrecognized_motion&#39;</code> for anything outside
+that vocabulary, which is the signal to hand the prompt to a model instead.</p>
+<h3 id="from-a-model"><a class="anchor" href="#from-a-model" aria-label="Link to this section">#</a>From a model</h3>
+<p>Give any tool-calling model <code>scoreSchema()</code> and let it author the score. Every
+enum in the schema is generated from the same vocabulary the solver reads, so a
+model cannot invent a word the compiler will reject.</p>
+<pre><code class="language-js">import { compileScore, scoreSchema } from &#39;@three-ws/motion&#39;;
+
+const score = await yourModel.json({
+  system: &#39;Write a Motion Score for the described movement.&#39;,
+  user: &#39;She looks up from her desk, considers it, then shakes her head slowly.&#39;,
+  schema: scoreSchema(),
+});
+
+const { clip, warnings } = compileScore(score);
+</code></pre>
+<h3 id="by-hand"><a class="anchor" href="#by-hand" aria-label="Link to this section">#</a>By hand</h3>
+<pre><code class="language-js">import { compileScore } from &#39;@three-ws/motion&#39;;
+
+const { clip } = compileScore({
+  name: &#39;thinking it over&#39;,
+  beats: [
+    { label: &#39;still&#39;, posture: &#39;easy&#39;, hold: 0.4 },
+    {
+      label: &#39;hand to chin&#39;,
+      posture: &#39;easy&#39;,
+      arms: { right: { at: &#39;chin&#39;, palm: &#39;in&#39;, hand: &#39;loose&#39;, elbow: &#39;down&#39; } },
+      gaze: &#39;aside&#39;,
+      face: &#39;focused&#39;,
+      in: 0.5,
+      hold: 1.2,
+    },
+    { label: &#39;decides&#39;, posture: &#39;proud&#39;, gaze: &#39;forward&#39;, face: &#39;smile&#39;, in: 0.45, hold: 0.5 },
+  ],
+});
+</code></pre>
+<h2 id="the-motion-score"><a class="anchor" href="#the-motion-score" aria-label="Link to this section">#</a>The Motion Score</h2>
+<p>A score is a list of <strong>beats</strong>. A beat is where the body is at one instant, how
+long it takes to get there (<code>in</code>), and how long it stays (<code>hold</code>). Nothing in it
+is a bone name.</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;greeting&quot;,
+  &quot;loop&quot;: false,
+  &quot;effort&quot;: &quot;playful&quot;,
+  &quot;beats&quot;: [
+    { &quot;posture&quot;: &quot;easy&quot;, &quot;hold&quot;: 0.2 },
+    {
+      &quot;label&quot;: &quot;hand up&quot;,
+      &quot;posture&quot;: &quot;easy&quot;,
+      &quot;arms&quot;: { &quot;right&quot;: { &quot;at&quot;: &quot;overhead&quot;, &quot;up&quot;: -0.08, &quot;palm&quot;: &quot;forward&quot;, &quot;hand&quot;: &quot;open&quot;, &quot;elbow&quot;: &quot;out&quot; } },
+      &quot;gaze&quot;: &quot;forward&quot;,
+      &quot;face&quot;: &quot;smile&quot;,
+      &quot;in&quot;: 0.36,
+      &quot;hold&quot;: 0.1
+    },
+    { &quot;label&quot;: &quot;lower&quot;, &quot;arms&quot;: { &quot;right&quot;: { &quot;at&quot;: &quot;side&quot;, &quot;hand&quot;: &quot;relaxed&quot; } }, &quot;in&quot;: 0.5, &quot;hold&quot;: 0.2 }
+  ]
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>What it says</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>posture</code></td>
+<td>a whole-body shape (<code>stand</code>, <code>crouch</code>, <code>sit</code>, <code>lunge</code>, <code>bow</code>, <code>tiptoe</code>, …) that seeds the rest</td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>hip <code>height</code> as a fraction of standing, plus <code>forward</code> / <code>side</code> travel, <code>rise</code>, and <code>turn</code></td>
+</tr>
+<tr>
+<td><code>torso</code></td>
+<td><code>lean</code>, <code>twist</code>, <code>sideBend</code>, in degrees, distributed along the spine</td>
+</tr>
+<tr>
+<td><code>arms</code></td>
+<td>per side: an anchor (<code>chin</code>, <code>sternum</code>, <code>overhead</code>, <code>thigh</code>, <code>front</code>, …), offsets, palm, hand</td>
+</tr>
+<tr>
+<td><code>legs</code></td>
+<td>a <code>stance</code>, or per-foot placement with <code>plant</code> (<code>flat</code>, <code>toe</code>, <code>heel</code>, <code>lift</code>)</td>
+</tr>
+<tr>
+<td><code>gaze</code></td>
+<td>a named look, or explicit <code>yaw</code> / <code>pitch</code></td>
+</tr>
+<tr>
+<td><code>face</code></td>
+<td>a named expression, mapped to ARKit blendshape weights</td>
+</tr>
+<tr>
+<td><code>effort</code></td>
+<td>how it is performed: <code>weight</code>, <code>time</code>, <code>flow</code>, or a preset like <code>sharp</code> / <code>weary</code> / <code>sustained</code></td>
+</tr>
+</tbody></table>
+<p><strong>Effort is not decoration.</strong> It picks the easing curve, scales the travel time,
+and sets how far a limb overshoots before it settles, which is what makes the
+same three shapes read as a wave, a swat, or a salute.</p>
+<p>The full field reference is
+<a href="https://github.com/nirholas/three.ws/blob/main/specs/MOTION_SCORE.md">specs/MOTION_SCORE.md</a>.</p>
+<h2 id="api"><a class="anchor" href="#api" aria-label="Link to this section">#</a>API</h2>
+<table>
+<thead>
+<tr>
+<th>Export</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>motionFromText(prompt, opts)</code></td>
+<td>prompt to <code>{ clip, score, matched, warnings }</code>, no model needed</td>
+</tr>
+<tr>
+<td><code>compileScore(score, opts)</code></td>
+<td>score to <code>{ clip, score, warnings }</code></td>
+</tr>
+<tr>
+<td><code>validateScore(input)</code></td>
+<td><code>{ ok, score, error }</code> with the exact path that failed</td>
+</tr>
+<tr>
+<td><code>normalizeScore(input)</code></td>
+<td>the same, but throws</td>
+</tr>
+<tr>
+<td><code>scoreSchema()</code></td>
+<td>JSON Schema for a tool call, generated from the live vocabulary</td>
+</tr>
+<tr>
+<td><code>motionCapabilities()</code></td>
+<td>schema, limits, and known actions in one object</td>
+</tr>
+<tr>
+<td><code>composeScore(prompt, opts)</code></td>
+<td>the model-free lane on its own, returning a raw score</td>
+</tr>
+<tr>
+<td><code>describeScore(score)</code></td>
+<td>one readable line: duration, beats, and what happens</td>
+</tr>
+<tr>
+<td><code>solveBeat(beat)</code></td>
+<td>one beat to a solved <code>Pose</code></td>
+</tr>
+<tr>
+<td><code>buildClip(keys, opts)</code></td>
+<td>solved poses to a clip document</td>
+</tr>
+</tbody></table>
+<p><code>compileScore</code> options: <code>idle</code> (breathing and micro-sway, default on),
+<code>rootMotion</code> (the hip translation track, default on, turn off for a clip that
+must play in place), <code>fingers</code> (default on).</p>
+<p>The kinematics layer is exported too, for callers building an editor or a
+different authoring format:</p>
+<pre><code class="language-js">import { restPose, solveArm, solveLeg, solveSpine, anchorPoint, centreOfMass } from &#39;@three-ws/motion&#39;;
+
+const pose = restPose();
+solveArm(pose, &#39;Right&#39;, { wrist: anchorPoint(pose, &#39;chin&#39;, { side: &#39;Right&#39; }), palm: [0, 0, 1] });
+</code></pre>
+<p>Or import it on its own, with none of the score machinery:</p>
+<pre><code class="language-js">import { Pose, solveTwoBone, BODY_FORWARD } from &#39;@three-ws/motion/rig&#39;;
+</code></pre>
+<h2 id="cli"><a class="anchor" href="#cli" aria-label="Link to this section">#</a>CLI</h2>
+<pre><code class="language-bash">npx @three-ws/motion &quot;wave hello twice, excitedly&quot; -o wave.json
+npx @three-ws/motion --score sit.json --no-idle --no-root -o sit.json
+npx @three-ws/motion --schema      # the score schema, for a tool call
+npx @three-ws/motion --actions     # what the model-free lane knows
+</code></pre>
+<h2 id="how-it-works"><a class="anchor" href="#how-it-works" aria-label="Link to this section">#</a>How it works</h2>
+<p>Each beat is solved in an order that matters:</p>
+<pre><code>root      where the hips are, which everything below hangs from
+turn      the body&#39;s heading, so limbs solve in the turned frame
+torso     lean, twist, side-bend, shared along the spine
+legs      ankles placed in WORLD space, so dropping the hips bends the knees
+balance   the hips nudged until the centre of mass sits over the feet
+arms      wrists placed against anchors that ride the posed chest
+hands     shape, after the wrist is where it belongs
+gaze      last, so a look is relative to the chest it ended up on
+</code></pre>
+<p>Reverse any two and the result is subtly wrong in a way that is impossible to
+fix downstream. Solve the arms before the torso and every gesture sits where the
+chest used to be. Solve the legs before the root and a crouch drives the feet
+through the floor.</p>
+<p>Four details do most of the work:</p>
+<ul>
+<li><strong>Feet are placed against the floor, not against the hips.</strong> The hips are free
+to drop, lean and turn; the legs absorb it through IK, which is what a real
+body does and why a crouch looks like a crouch.</li>
+<li><strong>Balance is measured, not assumed.</strong> The centre of mass is a mass-weighted
+sum over the segments that carry a body&#39;s weight, and the hips are moved until
+it sits over whichever feet are carrying weight. A lifted foot carries none,
+so a single-leg beat shifts the body over the standing leg on its own.</li>
+<li><strong>The clavicle helps.</strong> An arm is not two bones on a fixed socket. The
+shoulder girdle swings toward a distant target, which is worth ten to fifteen
+centimetres of reach and most of what makes a reach read as a whole body
+reaching.</li>
+<li><strong>Easing is baked as geometry.</strong> A mixer slerps between quaternion keys
+linearly, so an ease named in the score has to exist as extra samples in the
+track or it is not there at all.</li>
+</ul>
+<p>The reference skeleton is measured from a real rig&#39;s bind pose rather than
+assumed: bone lengths, segment directions, the body&#39;s own forward axis, and the
+hand frame are all read from the data, so re-measuring a different rig changes
+the numbers and not the code.</p>
+<h2 id="playing-the-clip-on-a-different-rig"><a class="anchor" href="#playing-the-clip-on-a-different-rig" aria-label="Link to this section">#</a>Playing the clip on a different rig</h2>
+<p>The output uses canonical bone names (<code>Hips</code>, <code>Spine2</code>, <code>LeftForeArm</code>,
+<code>RightUpLeg</code>, …). To play it on a rig with different names, run it through a
+retargeter: three.ws ships one that maps Mixamo, Avaturn, Unreal, VRM/VRoid,
+Daz, MakeHuman and Blender conventions onto the same canonical set.</p>
+<pre><code class="language-html">&lt;script type=&quot;module&quot; src=&quot;https://three.ws/agent-3d.js&quot;&gt;&lt;/script&gt;
+&lt;agent-3d src=&quot;https://raw.githubusercontent.com/nirholas/three-ws-motion/main/agent://base/42&quot; clip=&quot;https://example.com/wave.json&quot;&gt;&lt;/agent-3d&gt;
+</code></pre>
+<h2 id="related"><a class="anchor" href="#related" aria-label="Link to this section">#</a>Related</h2>
+<ul>
+<li><a href="https://www.npmjs.com/package/@three-ws/avatar"><code>@three-ws/avatar</code></a> renders
+the avatar this drives.</li>
+<li><a href="https://www.npmjs.com/package/@three-ws/mocap"><code>@three-ws/mocap</code></a> is the
+captured half: a webcam performance saved as a clip.</li>
+<li><a href="https://www.npmjs.com/package/@three-ws/pose"><code>@three-ws/pose</code></a> is named
+static poses, where this package is motion between them.</li>
+<li><a href="https://three.ws/motion">three.ws/motion</a> is the studio: type a sentence,
+watch any avatar perform it, and export the GLB.</li>
+</ul>
+<h2 id="license"><a class="anchor" href="#license" aria-label="Link to this section">#</a>License</h2>
+<p>Apache-2.0</p>
+</main>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#why">Why</a></li><li><a href="#install">Install</a></li><li><a href="#quick-start">Quick start</a></li><li><a href="#the-motion-score">The Motion Score</a></li><li><a href="#api">API</a></li><li><a href="#cli">CLI</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#playing-the-clip-on-a-different-rig">Playing the clip on a different rig</a></li><li><a href="#related">Related</a></li><li><a href="#license">License</a></li></ul></nav>
+</div>
+<footer><div class="foot-in"><span>Apache-2.0 licensed</span><a href="https://github.com/nirholas/three-ws-motion/issues">Issues</a><a href="https://github.com/nirholas/three-ws-motion/blob/main/CONTRIBUTING.md">Contributing</a><a href="https://github.com/nirholas/three-ws-motion/security/policy">Security</a><a href="https://three.ws">Part of three.ws</a></div></footer>
+<script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){
+var t=b.getAttribute('data-copy');var done=function(){var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o},1400)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){})}
+else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){}a.remove()}})});</script>
+</body>
+</html>

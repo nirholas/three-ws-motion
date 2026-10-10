@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it as below.
+title: "@three-ws/motion"
+abstract: "Text and structure to full-body 3D animation. A Motion Score in, a three.js AnimationClip out: forward and inverse kinematics, balance, ground contact and secondary motion in plain JavaScript, with no mocap data, no model weights and no renderer."
+version: 0.1.0
+license: Apache-2.0
+repository-code: "https://github.com/nirholas/three-ws-motion"
+url: "https://three.ws"
+authors:
+  - name: three.ws
+    website: "https://three.ws"
